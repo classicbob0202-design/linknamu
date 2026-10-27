@@ -1,19 +1,11 @@
-"use client";
-
 import type { LinkItem } from "@/data/profile";
 
-// 새 탭으로 넘어가도 요청이 끊기지 않도록 sendBeacon을 우선 사용
-function recordClick(linkId: string) {
-  const body = JSON.stringify({ linkId });
-  try {
-    if (navigator.sendBeacon?.("/api/clicks", body)) return;
-  } catch {
-    // sendBeacon을 못 쓰면 아래 fetch로 보냄
-  }
-  fetch("/api/clicks", { method: "POST", body, keepalive: true }).catch(() => {});
-}
+type Props = LinkItem & {
+  count: number;
+  onClick: () => void;
+};
 
-export default function LinkCard({ id, title, url, icon, description }: LinkItem) {
+export default function LinkCard({ title, url, icon, description, count, onClick }: Props) {
   // mailto: 같은 링크는 새 탭으로 열면 빈 탭만 남으므로 웹 주소만 새 탭으로 엶
   const isWeb = /^https?:\/\//.test(url);
   return (
@@ -21,7 +13,7 @@ export default function LinkCard({ id, title, url, icon, description }: LinkItem
       href={url}
       target={isWeb ? "_blank" : undefined}
       rel={isWeb ? "noopener noreferrer" : undefined}
-      onClick={() => recordClick(id)}
+      onClick={onClick}
       className="group flex min-h-16 items-center gap-4 rounded-3xl border border-white/70 bg-white/45 px-5 py-4 shadow-[0_4px_24px_-8px_rgba(160,90,50,0.18)] backdrop-blur-xl transition duration-300 ease-out hover:-translate-y-px hover:bg-white/65 hover:shadow-[0_8px_28px_-10px_rgba(160,90,50,0.28)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#E8794A] dark:border-white/10 dark:bg-white/[0.06] dark:shadow-[0_4px_24px_-8px_rgba(0,0,0,0.5)] dark:hover:bg-white/[0.1]"
     >
       {icon && (
@@ -39,6 +31,12 @@ export default function LinkCard({ id, title, url, icon, description }: LinkItem
             {description}
           </span>
         )}
+      </span>
+      <span
+        aria-label={`클릭 ${count.toLocaleString("ko-KR")}회`}
+        className="shrink-0 text-xs tabular-nums text-[#B08A73] dark:text-[#8A7366]"
+      >
+        {count.toLocaleString("ko-KR")}회
       </span>
       <svg
         aria-hidden="true"
