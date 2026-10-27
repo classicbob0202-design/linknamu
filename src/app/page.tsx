@@ -5,16 +5,26 @@ import { profile } from "@/data/profile";
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-gradient-to-b from-emerald-50 to-slate-100 px-4 py-12 transition-colors dark:from-slate-950 dark:to-slate-900 sm:py-16">
-      <div className="fixed right-4 top-4 z-10">
+    <div className="relative min-h-screen overflow-hidden bg-gradient-to-b from-[#FFF8EE] via-[#FFF1E2] to-[#FFDCC4] px-6 py-16 transition-colors dark:from-[#1C1714] dark:via-[#211A16] dark:to-[#2B1E17] sm:py-24">
+      {/* 글래스 카드 뒤로 은은하게 비치는 빛 번짐 */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute -top-32 left-1/2 h-80 w-80 -translate-x-1/2 rounded-full bg-[#FFC9A3]/50 blur-3xl dark:bg-[#7A4A2E]/30"
+      />
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute -bottom-24 -right-16 h-72 w-72 rounded-full bg-[#FFB8A0]/40 blur-3xl dark:bg-[#5C3524]/30"
+      />
+
+      <div className="fixed right-4 top-4 z-10 sm:right-6 sm:top-6">
         <ThemeToggle />
       </div>
 
-      <main className="mx-auto flex w-full max-w-md flex-col gap-8">
+      <main className="relative mx-auto flex w-full max-w-md flex-col gap-12">
         <ProfileHeader name={profile.name} bio={profile.bio} image={profile.image} />
 
         <nav aria-label={`${profile.name}의 링크`}>
-          <ul className="flex flex-col gap-3">
+          <ul className="flex flex-col gap-4">
             {profile.links.map((link) => (
               <li key={link.id}>
                 <LinkCard {...link} />
@@ -24,7 +34,9 @@ export default function Home() {
         </nav>
       </main>
 
-      <footer className="mt-12 text-center text-xs text-slate-400 dark:text-slate-500">링크나무</footer>
+      <footer className="relative mt-16 text-center text-xs tracking-wide text-[#B08A73] dark:text-[#8A7366]">
+        링크나무
+      </footer>
     </div>
   );
 }

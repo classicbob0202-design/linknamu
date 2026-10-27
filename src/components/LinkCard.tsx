@@ -13,19 +13,29 @@ function recordClick(linkId: string) {
   fetch("/api/clicks", { method: "POST", body, keepalive: true }).catch(() => {});
 }
 
-export default function LinkCard({ id, title, url, description }: LinkItem) {
+export default function LinkCard({ id, title, url, icon, description }: LinkItem) {
+  // mailto: 같은 링크는 새 탭으로 열면 빈 탭만 남으므로 웹 주소만 새 탭으로 엶
+  const isWeb = /^https?:\/\//.test(url);
   return (
     <a
       href={url}
-      target="_blank"
-      rel="noopener noreferrer"
+      target={isWeb ? "_blank" : undefined}
+      rel={isWeb ? "noopener noreferrer" : undefined}
       onClick={() => recordClick(id)}
-      className="group flex min-h-14 items-center justify-between gap-4 rounded-2xl border border-slate-200 bg-white px-5 py-4 shadow-sm transition hover:-translate-y-0.5 hover:border-emerald-400 hover:shadow-md focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-500 dark:border-slate-800 dark:bg-slate-900 dark:hover:border-emerald-500"
+      className="group flex min-h-16 items-center gap-4 rounded-3xl border border-white/70 bg-white/45 px-5 py-4 shadow-[0_4px_24px_-8px_rgba(160,90,50,0.18)] backdrop-blur-xl transition duration-300 ease-out hover:-translate-y-px hover:bg-white/65 hover:shadow-[0_8px_28px_-10px_rgba(160,90,50,0.28)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#E8794A] dark:border-white/10 dark:bg-white/[0.06] dark:shadow-[0_4px_24px_-8px_rgba(0,0,0,0.5)] dark:hover:bg-white/[0.1]"
     >
-      <span className="min-w-0">
-        <span className="block font-semibold text-slate-900 dark:text-slate-50">{title}</span>
+      {icon && (
+        <span
+          aria-hidden="true"
+          className="flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl bg-white/70 text-lg shadow-sm dark:bg-white/10"
+        >
+          {icon}
+        </span>
+      )}
+      <span className="min-w-0 flex-1">
+        <span className="block font-semibold text-[#3A2A20] dark:text-[#F7EDE5]">{title}</span>
         {description && (
-          <span className="mt-0.5 block truncate text-sm text-slate-500 dark:text-slate-400">
+          <span className="mt-0.5 block truncate text-sm text-[#8A6B58] dark:text-[#C2A898]">
             {description}
           </span>
         )}
@@ -34,7 +44,7 @@ export default function LinkCard({ id, title, url, description }: LinkItem) {
         aria-hidden="true"
         viewBox="0 0 20 20"
         fill="currentColor"
-        className="h-5 w-5 shrink-0 text-slate-400 transition group-hover:translate-x-0.5 group-hover:text-emerald-500"
+        className="h-4 w-4 shrink-0 text-[#C9A48C] transition duration-300 group-hover:translate-x-0.5 group-hover:text-[#E8794A] dark:text-[#8A7366]"
       >
         <path
           fillRule="evenodd"

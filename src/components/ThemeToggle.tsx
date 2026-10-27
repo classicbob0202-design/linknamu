@@ -27,7 +27,7 @@ export default function ThemeToggle() {
       onClick={toggle}
       aria-label={dark ? "밝은 화면으로 전환" : "어두운 화면으로 전환"}
       aria-pressed={dark ?? undefined}
-      className="flex h-11 w-11 items-center justify-center rounded-full border border-slate-200 bg-white/80 text-slate-600 shadow-sm backdrop-blur transition hover:text-emerald-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-500 dark:border-slate-800 dark:bg-slate-900/80 dark:text-slate-300 dark:hover:text-emerald-400"
+      className="flex h-11 w-11 items-center justify-center rounded-full border border-white/70 bg-white/45 text-[#8A6B58] shadow-sm backdrop-blur-xl transition duration-300 hover:bg-white/65 hover:text-[#E8794A] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#E8794A] dark:border-white/10 dark:bg-white/[0.06] dark:text-[#C2A898] dark:hover:bg-white/[0.1] dark:hover:text-[#FFB27A]"
     >
       {dark ? (
         <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="h-5 w-5">
